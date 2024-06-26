@@ -9,11 +9,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '17'
     - name: Build with Maven
       run: mvn clean install
     - name: Run tests
       run: mvn test
+    - name: SonarQube Scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=myproject \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=http://18.221.86.34:9000 \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
