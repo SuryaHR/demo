@@ -23,6 +23,11 @@ jobs:
       
     - name: Run tests
       run: mvn test
+
+    - name: Debug Path
+      run: |
+        ls -l /opt/sonar-scanner-5.0.1.3006-linux/bin
+        echo $PATH
       
     - name: SonarQube Scan
       env:
