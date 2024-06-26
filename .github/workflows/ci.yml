@@ -28,7 +28,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        sonar-scanner \
+        /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
           -Dsonar.projectKey=demo \
           -Dsonar.sources=. \
           -Dsonar.host.url=http://18.221.86.34:9000 \
