@@ -1,44 +1,15 @@
-name: Java CI with Maven
+name: CI Pipeline
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'temurin' # This specifies the distribution
-        java-version: 17
-        java-package: jdk
-        architecture: x64
-        check-latest: false
-        
-    - name: Build with Maven
-      run: mvn clean install
-      
-    - name: Run tests
-      run: mvn test
-
-    - name: Install Sonar Scanner
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y unzip
-        curl -sSLo /tmp/sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.12008-linux.zip
-        sudo unzip -q /tmp/sonar-scanner-cli.zip -d /opt
-        sudo ln -s /opt/sonar-scanner-4.8.0.12008-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner
-        sonar-scanner -v  # Verify installation
-      
-    - name: SonarQube Scan
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=demo \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=http://18.221.86.34:9000 \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+  sonar:
+    uses: SuryaHR/demo/.github/workflows/ci.yml@main
+    with:
+      projectKey: Insurance-Backend
+      projectToken: sqp_ed94b7f4b072494737ca2bb8e3e58e39170825dd
+      sourceDir: './src'
