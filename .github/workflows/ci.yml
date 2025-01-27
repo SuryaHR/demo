@@ -8,7 +8,7 @@ on:
 
 jobs:
   sonar:
-    uses: SuryaHR/Demo-app/.github/workflows/ci.yml@main
+    uses: SuryaHR/Demo-app/.github/workflows/ci.yml
     with:
       projectKey: Insurance-Backend
       projectToken: sqp_ed94b7f4b072494737ca2bb8e3e58e39170825dd
